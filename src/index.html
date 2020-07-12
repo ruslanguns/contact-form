@@ -1,22 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Webpack</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formulario de contacto</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
+
 <body>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 text-center">
+        <h1>Formulario de contacto</h1>
+      </div>
+    </div>
 
-    <img src="./assets/webpack-sprite.png" alt="Webpack logo" width="250px">
+    <div class="row">
+      <div class="col-12">
+        <form onsubmit="return false" id="contact-form" class="needs-validation" novalidate>
+          <div class="form-row">
+            <div class="col-sm-6 mb-3">
+              <label for="firstname">Nombre</label>
+              <input type="text" class="form-control" id="firstname" autocomplete="nope" required />
+              <div class="valid-feedback">
+                Todo bien!
+              </div>
+              <div class="invalid-feedback">
+                Debe introducir su nombre
+              </div>
+            </div>
+  
+            <div class="col-sm-6 mb-3">
+              <label for="company">Empresa</label>
+              <input type="text" class="form-control" id="company" autocomplete="nope" />
+            </div>
+          </div>
 
-    <!-- Este es un comentario en HTML -->
-    <!-- Este es un comentario en HTML -->
-    <!-- Este es un comentario en HTML -->
-    <!-- Este es un comentario en HTML -->
-    <!-- Este es un comentario en HTML -->
-    <!-- Este es un comentario en HTML -->
-    <!-- Este es un comentario en HTML -->
-    
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="text" class="form-control" id="phone" autocomplete="nope" />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo electrónico *</label>
+            <input type="email" class="form-control" id="email" required/>
+            <div class="valid-feedback">
+              Todo bien!
+            </div>
+            <div class="invalid-feedback">
+              Debe ser un correo electrónico válido.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Motivo de contacto *</label>
+            <select class="form-control" id="subject" required>
+              <option value="" selected disabled>-- Seleccione una opción --</option>
+              <option value="Obtener Licencia GRATIS">Obtener Licencia GRATIS</option>
+              <option value="Comprar Plan — Demostración">Comprar Plan — Demostración</option>
+              <option value="Comprar Plan — Distribuidor">Comprar Plan — Distribuidor</option>
+              <option value="Comprar Plan — Local">Comprar Plan — Local</option>
+              <option value="Información — Instalación de Wifi">Información — Instalación de Wifi</option>
+              <option value="Información — WiFi Hoteles">Información — WiFi Hoteles</option>
+              <option value="Información — Otros">Información — Otros</option>
+            </select>
+            <div class="valid-feedback">
+              Todo bien!
+            </div>
+            <div class="invalid-feedback">
+              Seleccione el asunto de su correo.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Mensaje</label>
+            <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+            <div class="valid-feedback">
+              Todo bien!
+            </div>
+            <div class="invalid-feedback">
+              Díganos, ¿en qué podemos ayudarle?
+            </div>
+          </div>
+          <small class="form-text mb-4" align="justify">
+            De acuerdo con lo establecido por la Ley Orgánica 15/1999, de 13
+            de diciembre, de Protección de Datos de Carácter Personal (LOPD),
+            le informamos que sus datos están incorporados en un formulario
+            será de Televoip World, S.L. con la única finalidad de poder
+            ponernos en contacto con usted y poder enviarle nuestro boletín de
+            noticias e información sobre las actividades de la Compañía.
+            Siempre puedrá ejercer sus derechos de rectificación y anulación
+            de suscripción para darse de baja en el momento que sea.
+          </small>
+
+          <div class="text-center">
+            <div class="col-12">
+              <button
+                  type="submit" 
+                  onclick="sendFormOnSubmit()"
+                  id="sendContactButton"
+                  data-sitekey="reCAPTCHA_site_key" 
+                  data-callback='onSubmit' 
+                  data-action='submit'
+                  class="btn btn-primary btn-lg">
+                Aceptar y Enviar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LeLZ7AZAAAAAB5tTLi-L5I5atxIZa6W6r0JwjSo"></script>
+
+  <script>
+    (function () {
+      "use strict";
+      window.addEventListener(
+        "load",
+        function () {
+          var forms = document.getElementsByClassName("needs-validation");
+          var validation = Array.prototype.filter.call(forms, function (
+            form
+          ) {
+            form.addEventListener(
+              "submit",
+              function (event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          });
+        },
+        false
+      );
+    })();
+  </script>
+  <script>
+
+    const fields = {};
+    const form = document.getElementById('contact-form');
+    document.addEventListener("DOMContentLoaded", () => {
+      fields.firstname = document.getElementById("firstname");
+      fields.company = document.getElementById("company");
+      fields.phone = document.getElementById("phone");
+      fields.email = document.getElementById("email");
+      fields.subject = document.getElementById("subject");
+      fields.message = document.getElementById("message");
+    });
+
+    const getOptionSelected = () => {
+      const el = document.getElementById("subject");
+      const text = el.options[el.selectedIndex].text;
+      return text;
+    };
+
+    class User {
+      constructor(firstname, company, phone, email, subject, message) {
+        this.firstname = firstname;
+        this.company = company;
+        this.phone = phone;
+        this.email = email;
+        this.subject = subject;
+        this.message = message;
+      }
+    }
+
+    const sendFormOnSubmit = () => {
+      if ( form.checkValidity()) {
+        grecaptcha.ready(() => {
+          grecaptcha.execute('6LeLZ7AZAAAAAB5tTLi-L5I5atxIZa6W6r0JwjSo', { action: 'submit' })
+            .then((token) => {
+              fields.subject = getOptionSelected();
+              let usr = new User(
+                firstname.value,
+                company.value,
+                phone.value,
+                email.value,
+                subject.value,
+                message.value
+              );
+              console.log(usr); // Enviar el formulario....!
+            })
+        })
+        
+      } else {
+        console.log('Revise el formulario...')
+      }
+    };
+  </script>
 </body>
+
 </html>
